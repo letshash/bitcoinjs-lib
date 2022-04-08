@@ -34,25 +34,4 @@ function hash256(buffer) {
   return sha256(sha256(buffer));
 }
 exports.hash256 = hash256;
-const TAGS = [
-  'BIP0340/challenge',
-  'BIP0340/aux',
-  'BIP0340/nonce',
-  'TapLeaf',
-  'TapBranch',
-  'TapSighash',
-  'TapTweak',
-  'KeyAgg list',
-  'KeyAgg coefficient',
-];
-/** An object mapping tags to their tagged hash prefix of [SHA256(tag) | SHA256(tag)] */
-const TAGGED_HASH_PREFIXES = Object.fromEntries(
-  TAGS.map(tag => {
-    const tagHash = sha256(Buffer.from(tag));
-    return [tag, Buffer.concat([tagHash, tagHash])];
-  }),
-);
-function taggedHash(prefix, data) {
-  return sha256(Buffer.concat([TAGGED_HASH_PREFIXES[prefix], data]));
-}
-exports.taggedHash = taggedHash;
+
